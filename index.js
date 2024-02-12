@@ -3,32 +3,37 @@ const { data } = require("./members");
 const { users } = require("./users");
 const moment = require("moment");
 
-const server = http
-  .createServer((req, res) => {
-    res.statusCode = 200;
-    res.setHeader("Content-Type", "text/plain");
+const PORT = 3010;
+const HOST = "127.0.0.1";
 
-    const url = req.url;
+const server = http.createServer((req, res) => {
+  res.statusCode = 200;
+  res.setHeader("Content-Type", "text/plain");
 
-    if (url === "/") {
-      res.write("This is home page");
-    }
+  const url = req.url;
 
-    if (url === "/about") {
-      res.write(
-        JSON.stringify({
-          status: "Success",
-          message: "Response success",
-          description: "Exerscise #3",
-          date: moment(),
-          data,
-        })
-      );
-    }
+  if (url === "/") {
+    res.write("This is home page");
+  }
 
-    if (url === "/users") {
-      res.write(JSON.stringify(users));
-    }
-    res.end();
-  })
-  .listen(3010);
+  if (url === "/about") {
+    res.write(
+      JSON.stringify({
+        status: "Success",
+        message: "Response success",
+        description: "Exerscise #3",
+        date: moment(),
+        data,
+      })
+    );
+  }
+
+  if (url === "/users") {
+    res.write(JSON.stringify(users));
+  }
+  res.end();
+});
+
+server.listen(PORT, HOST, () => {
+  console.log(`Server is running on port ${PORT}: ${new Date()}`);
+});
